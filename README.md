@@ -1,69 +1,75 @@
-# 🧠 Data Investigation: Mental Health and Social Media Usage
+# Impact of Social Media on Teenagers' Mental Health
 
-## 🎯 The Project
-This project performs Exploratory Data Analysis (EDA) and applies Machine Learning models to investigate the relationship between social media usage and the development of depression in teenagers. 
+## 📌 About the Project
+This repository contains a detailed analysis of the impact of social media use on teenagers' mental health, employing supervised and unsupervised Machine Learning techniques. The project's goal is to understand behavioral patterns — such as sleep hours, screen time, and physical activity — and their relationship with stress levels, anxiety, and the risk of depression. 
 
-What started as a standard behavioral analysis turned into a **Data Profiling and Anomaly Detection** investigation, using Machine Learning techniques to reverse-engineer the hardcoded rules used to create the dataset itself.
+## 📊 Dataset
+The dataset used (`Teen_Mental_Health_Dataset.csv`) was obtained via Kaggle (`algozee/teenager-menthal-healy`). It includes data from 1,200 students, covering:
+- Daily social media time and usage of specific platforms (Instagram, TikTok, or both).
+- Hours of sleep and screen time before bed.
+- Academic performance, physical activity levels, and social interaction.
+- Psychological indicators: stress levels, anxiety, addiction, and depression diagnosis (`depression_label`).
 
-## 🛠️ Technologies and Libraries
-* **Python 3.13.9**
-* **Pandas:** Data manipulation, cleaning, and grouping.
-* **Seaborn & Matplotlib:** Data visualization (KDE, Scatterplots, Boxplots).
-* **Scikit-Learn:** Predictive modeling (`RandomForestClassifier`, `DecisionTreeClassifier`) and evaluation metrics.
+## 📂 Repository Structure
+The investigation was divided into two analytical fronts, documented in the following Jupyter Notebooks:
 
-## 🔍 The Investigation (Step-by-Step)
+### 1. `k_means.ipynb` (Unsupervised Learning)
+The focus of this script is to discover hidden behavioral profiles within the database.
+- **Feature Engineering:** Creation of crucial new health metrics, such as `sleep_deficit`, `screen_sleep_ratio`, and `mental_load_score`.
+- **Preprocessing:** Mathematical standardization of numerical variables using `StandardScaler`.
+- **Dimensionality Reduction:** Application of PCA (*Principal Component Analysis*) to optimize the vector space and eliminate redundancies, visually evaluating the explained variance.
+- **Clustering:** Utilization of the K-Means algorithm to segment teenagers into similarity groups (Clusters) and map the depression rate within each profile.
 
-### 1. Statistical Analysis (The False Common Sense)
-We started the analysis by testing classic hypotheses using Pearson Correlation. We immediately discovered that:
-* There is no strong linear correlation (0.03) between screen time and stress.
-* Physical activity does not act as a "shield" for users with extreme usage (>7 daily hours).
-* The chosen platform (TikTok vs Instagram) does not alter anxiety metrics or academic performance.
+### 2. `random_forest.ipynb` (Supervised Learning)
+This script focuses on modeling and predicting the target variable (`depression_label`).
+- **Exploratory Data Analysis (EDA):** Evaluation using interactive correlation matrices to identify the strength of the linear relationship between social media use and mental health variables.
+- **Class Balancing:** Implementation of spatial oversampling techniques (SMOTE) to handle the strong minority of positive depression cases.
+- **Predictive Modeling:** Training a `RandomForestClassifier`, applying penalization hyperparameters (`class_weight='balanced'`) and depth restriction (`max_depth=5`) to mitigate overfitting.
+- **Performance Evaluation:** Analysis of the Confusion Matrix, AUC-ROC score, Average Precision, and Precision-Recall curve Threshold.
 
-### 2. The Imbalance Problem
-We identified that the target variable (`depression_label`) was present in only **2.5%** of the dataset. To handle this, we abandoned isolated metrics and applied tree algorithms along with the `class_weight='balanced'` parameter.
+## 💡 Key Insights and Conclusions
+- Feature engineering proved to be essential: understanding composite proportions (such as the screen-to-sleep ratio) offered cleaner paths for clustering users compared to isolated data.
+- **Data Anomaly Alert:** The trained Random Forest model achieved perfectly anomalous evaluation metrics (AUC-ROC of 0.9936). In the context of human health and psychiatry, behavior naturally possesses a high level of noise and uncontrollable variables, making this result statistically impossible. Since tree-based algorithms are excellent at mapping exact mathematical formulas, we strongly conclude that this dataset is synthetically generated. In the real world of Data Science, any model with an AUC greater than 0.80 on clinical mental health data inherently demands strong suspicion and revalidation.
 
-### 3. Machine Learning
-We trained a **Random Forest** model to extract *Feature Importance*, discovering that sleep deprivation and stress levels were the dominant factors, leaving screen time in 4th place.
-
-Seeking explainability, we replaced it with a **Decision Tree**. The model achieved an impressive **100% accuracy, precision, and recall** on the test split.
-
-### 4. Conclusion of the Investigation
-In human behavior analysis, 100% precision is statistically improbable. By plotting the Decision Tree's mental map, we revealed that the model found an exact conditional rule (Stress > 6.5 AND Sleep < 5.85 AND Anxiety > 6.5 AND Screen Time > 4.85). 
-
-**Verdict:** We mathematically proved that this dataset is **synthetic**, generated by a deterministic algorithm. This project demonstrates the ability not only to create predictive models but also to audit the integrity, noise, and veracity of the data source (a crucial skill for *Fraud Detection* and *Risk Analysis* roles).
+## 🛠️ Technologies Used
+- **Language:** Python
+- **Core Libraries:** Pandas, NumPy, Matplotlib, Seaborn, Scikit-Learn (PCA, KMeans, RandomForestClassifier), and Imbalanced-learn (SMOTE).
 
 ---
 
-# 🧠 Investigação de Dados: Saúde Mental e Uso de Redes Sociais
+# Impacto das Redes Sociais na Saúde Mental de Adolescentes
 
-## 🎯 O Projeto
-Este projeto realiza uma Análise Exploratória de Dados (EDA) e aplica modelos de Machine Learning para investigar a relação entre o uso de redes sociais e o desenvolvimento de depressão em adolescentes. 
+## 📌 Sobre o Projeto
+Este repositório contém uma análise detalhada sobre o impacto do uso de redes sociais na saúde mental de adolescentes, utilizando técnicas de Machine Learning supervisionado e não supervisionado. O objetivo do projeto é entender os padrões de comportamento — como horas de sono, tempo de tela e atividade física — e sua relação com níveis de estresse, ansiedade e risco de depressão.
 
-O que começou como uma análise comportamental padrão transformou-se em uma investigação de **Data Profiling e Detecção de Anomalias**, utilizando técnicas de Machine Learning para fazer engenharia reversa nas regras de criação do próprio dataset.
+## 📊 Conjunto de Dados
+O dataset utilizado (`Teen_Mental_Health_Dataset.csv`) foi obtido através do Kaggle (`algozee/teenager-menthal-healy`). Ele inclui dados de 1200 estudantes, abordando:
+- Tempo diário de redes sociais e uso de plataformas específicas (Instagram, TikTok ou ambos).
+- Horas de sono e tempo de tela antes de dormir.
+- Desempenho acadêmico, nível de atividade física e interação social.
+- Indicadores psicológicos: níveis de estresse, ansiedade, vício e diagnóstico de depressão (`depression_label`).
 
-## 🛠️ Tecnologias e Bibliotecas
-* **Python 3.13.9**
-* **Pandas:** Manipulação, limpeza e agrupamento de dados.
-* **Seaborn & Matplotlib:** Visualização de dados (KDE, Scatterplots, Boxplots).
-* **Scikit-Learn:** Modelagem preditiva (`RandomForestClassifier`, `DecisionTreeClassifier`) e métricas de avaliação.
+## 📂 Estrutura do Repositório
+A investigação foi dividida em duas frentes analíticas, documentadas nos seguintes Jupyter Notebooks:
 
-## 🔍 A Investigação (Passo a Passo)
+### 1. `k_means.ipynb` (Aprendizado Não Supervisionado)
+O foco deste script é descobrir perfis de comportamento ocultos na base de dados.
+- **Engenharia de Atributos (Feature Engineering):** Criação de novas métricas cruciais de saúde, como o `deficit_sono`, a `relacao_tela_sono` e a `pontuacao_carga_mental`.
+- **Pré-processamento:** Padronização matemática das variáveis numéricas utilizando o `StandardScaler`.
+- **Redução de Dimensionalidade:** Aplicação de PCA (*Principal Component Analysis*) para otimizar o espaço vetorial e eliminar redundâncias, avaliando visualmente a variância explicada.
+- **Clusterização:** Uso do algoritmo K-Means para segmentar os adolescentes em grupos de similaridade (Clusters) e mapear a taxa de depressão dentro de cada perfil.
 
-### 1. Análise Estatística (O Falso Senso Comum)
-Iniciamos a análise testando hipóteses clássicas usando a Correlação de Pearson. Descobrimos de imediato que:
-* Não há correlação linear forte (0.03) entre horas de tela e estresse.
-* A prática de atividades físicas não atua como "escudo" para usuários com uso extremo (>7 horas diárias).
-* A plataforma escolhida (TikTok vs Instagram) não altera as métricas de ansiedade ou desempenho acadêmico.
+### 2. `random_forest.ipynb` (Aprendizado Supervisionado)
+Este script foca na modelagem e previsão da variável alvo (`depression_label`).
+- **Análise Exploratória (EDA):** Avaliação com matrizes de correlação interativas para identificar a força da relação linear entre o uso de mídias sociais e as variáveis de saúde mental.
+- **Balanceamento de Classes:** Implementação de técnicas de *oversampling* espacial (SMOTE) para lidar com a forte minoria de casos positivos de depressão.
+- **Modelagem Preditiva:** Treinamento de um `RandomForestClassifier`, aplicando hiperparâmetros de penalização (`class_weight='balanced'`) e restrição de profundidade (`max_depth=5`) para mitigar overfitting.
+- **Avaliação de Performance:** Análise da Matriz de Confusão, pontuação AUC-ROC, *Average Precision* e Threshold da curva Precision-Recall.
 
-### 2. O Problema do Desbalanceamento
-Identificamos que a variável alvo (`depression_label`) estava presente em apenas **2.5%** da base. Para lidar com isso, abandonamos métricas isoladas e aplicamos algoritmos de árvores em conjunto com o parâmetro `class_weight='balanced'`.
+## 💡 Principais Insights e Conclusões
+- A feature engineering demonstrou ser essencial: entender proporções compostas (como a relação tela/sono) ofereceu caminhos mais limpos para a clusterização dos usuários do que os dados isolados.
+- **Alerta de Anomalia nos Dados:** O modelo Random Forest treinado atingiu métricas de avaliação perfeitamente anômalas (AUC-ROC de 0.9936). No contexto de saúde humana e psiquiatria, o comportamento possui naturalmente um alto nível de ruídos e variáveis incontroláveis, tornando esse resultado estatisticamente impossível. Como algoritmos baseados em árvores são excelentes em mapear fórmulas matemáticas exatas, concluímos de forma contundente que este dataset é gerado sinteticamente. No mundo real de Data Science, qualquer modelo com uma AUC superior a 0.80 em dados de saúde mental clínica já exige forte suspeita e revalidação.
 
-### 3. Machine Learning
-Treinamos um modelo de **Random Forest** para extrair a *Feature Importance*, descobrindo que a privação de sono e o nível de estresse eram os fatores dominantes, deixando o tempo de tela em 4º lugar.
-
-Para buscar explicabilidade, substituímos por uma **Árvore de Decisão**. O modelo atingiu impressionantes **100% de acurácia, precision e recall** na base de testes.
-
-### 4. Conclusão da Investigação
-Na análise de comportamento humano, 100% de precisão é estatisticamente improvável. Ao plotar o mapa mental da Árvore de Decisão, revelamos que o modelo encontrou uma regra condicional exata (Estresse > 6.5 AND Sono < 5.85 AND Ansiedade > 6.5 AND Tempo de Tela > 4.85). 
-
-**Veredito:** Provamos matematicamente que este dataset é **sintético**, gerado por um algoritmo determinístico. Este projeto demonstra a capacidade não apenas de criar modelos preditivos, mas de auditar a integridade, o ruído e a veracidade da fonte de dados (uma habilidade crucial para áreas de *Fraud Detection* e *Risk Analysis*).
+## 🛠️ Tecnologias Utilizadas
+- **Linguagem:** Python
+- **Bibliotecas Principais:** Pandas, NumPy, Matplotlib, Seaborn, Scikit-Learn (PCA, KMeans, RandomForestClassifier) e Imbalanced-learn (SMOTE).
